@@ -22,7 +22,6 @@ type StepProgressBarProps = Partial<{
   stepStyles: StepStyles;
   barProps: Progress.BarPropTypes;
   containerStyle: ViewStyle;
-  renderStepContent: (index: number, isActive: boolean, isCompleted: boolean) => React.ReactNode;
 }>;
 
 interface UseStepProgressOptions {

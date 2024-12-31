@@ -1,22 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Progress from "react-native-progress";
 import { StepProgressBarProps } from "./types";
 
 export const StepProgressBar = (props: StepProgressBarProps) => {
-  const {
-    totalSteps = 3,
-    currentStep = 0,
-    onStepChange = () => {},
-    stepIcons = {},
-    stepStyles = {},
-    containerStyle = {},
-    barProps = {},
-    renderStepContent = null,
-  } = props;
+  const { totalSteps = 3, currentStep = 0, onStepChange = () => {}, stepIcons = {}, stepStyles = {}, containerStyle = {}, barProps = {} } = props;
 
   const positions = Array.from({ length: totalSteps });
   const progress = currentStep / (totalSteps - 1);
+  const [iconStep, setIconStep] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIconStep(currentStep);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [currentStep]);
 
   return (
     <View style={[styles.progressContainer, containerStyle]}>
@@ -25,8 +24,8 @@ export const StepProgressBar = (props: StepProgressBarProps) => {
       {/* Steps */}
       <View style={[styles.stepsOverlay, stepStyles.overlay]}>
         {positions.map((_, index) => {
-          const isCompleted = index < currentStep;
-          const isActive = index === currentStep;
+          const isCompleted = index < iconStep;
+          const isActive = index === iconStep;
 
           const StepIcon = isCompleted
             ? stepIcons.completed || DefaultCompletedIcon
@@ -42,7 +41,7 @@ export const StepProgressBar = (props: StepProgressBarProps) => {
               accessibilityLabel={`Step ${index + 1}`}
               accessibilityRole="button"
             >
-              {renderStepContent ? renderStepContent(index, isActive, isCompleted) : <StepIcon />}
+              <StepIcon />
             </TouchableOpacity>
           );
         })}
