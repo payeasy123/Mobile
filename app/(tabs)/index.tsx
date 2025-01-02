@@ -1,45 +1,57 @@
-import { StepProgressBar } from "@/src/shared/components/ui";
-import { useStepProgress } from "@/src/shared/components/ui/ProgressBar/useProgressBar";
-import { MaterialIcons } from "@expo/vector-icons";
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { IconSymbol } from "@/src/shared/components/icons";
+import { Button } from "@/src/shared/components/ui";
+import CustomInput from "@/src/shared/components/ui/Input";
+import { Ionicons } from "@expo/vector-icons"; // For icons
+import { useState } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
 
 export default function App() {
-  const { currentStep, handleNext, handlePrevious, isNextDisabled, isPreviousDisabled, totalSteps } = useStepProgress({
-    totalSteps: 5,
-    initialStep: 2,
-  });
+  const handlePress = () => console.log("Button Pressed");
+  const [value, setValue] = useState("");
 
   return (
     <View style={styles.container}>
-      <StepProgressBar
-        currentStep={currentStep}
-        totalSteps={totalSteps}
-        barProps={{
-          color: "#ff5722",
-          height: 6,
-        }}
-        // stepStyles={{
-        //   circle: { borderWidth: 2, borderColor: "#ff5722" },
-        //   activeCircle: { backgroundColor: "#ff5722" },
-        //   completedCircle: { backgroundColor: "#4caf50" },
-        // }}
-        stepIcons={{
-          completed: () => <MaterialIcons name="check" size={20} color="white" />,
-          active: () => <MaterialIcons name="radio-button-on" size={20} color="blue" />,
-          default: () => <MaterialIcons name="radio-button-off" size={20} color="gray" />,
+      Hello
+      <Button
+        title="Header"
+        onPress={handlePress}
+        variant="gradient"
+        gradientColors={["#0077B6", "#AB49FF"]}
+        icon={<Ionicons name="arrow-forward" size={16} color="#fff" />}
+        gradientProps={{
+          start: { x: 1, y: 0 },
+          end: { x: 1, y: 0 },
         }}
       />
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handlePrevious} disabled={isPreviousDisabled} style={[styles.button, isPreviousDisabled && styles.disabledButton]}>
-          <Text style={styles.buttonText}>Previous</Text>
-        </TouchableOpacity>
+      <CustomInput
+        label="Header"
+        value={value}
+        onChangeText={setValue}
+        placeholder="Email Address"
+        variant="outlined"
+        iconLeft="mail"
+        iconRight={<IconSymbol size={28} name="checkmark.circle.fill" color="#0D9D31" />}
+        onRightIconPress={() => console.log("Icon Pressed")}
+        loading={false}
+        // borderColor="#AB49FF"
+        errorMessage={value.includes("@") ? "" : "Invalid email"}
+        infoMessage={value.includes("@") ? "" : "Invalid email"}
+        disabled
+      />
 
-        <TouchableOpacity onPress={handleNext} disabled={isNextDisabled} style={[styles.button, isNextDisabled && styles.disabledButton]}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      </View>
+      <CustomInput
+        label="Password"
+        value={value}
+        onChangeText={setValue}
+        placeholder="Password"
+        variant="standard"
+        iconRight="eye"
+        onRightIconPress={() => console.log("Show Password")}
+        disabled
+        
+        // backgroundColor="#f3f4f6"
+      />
     </View>
   );
 }
@@ -52,64 +64,28 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#f5f5f5",
   },
-  label: {
-    fontSize: 18,
-    marginBottom: 20,
-    color: "#333",
-  },
-  progressContainer: {
-    position: "relative",
-    width: 350,
-    marginBottom: 30,
-  },
-  progressBar: {
-    zIndex: 1,
-  },
-  stepsOverlay: {
-    position: "absolute",
-    top: -15,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    zIndex: 2,
-  },
-  circle: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: "#e0e0e0",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  completedCircle: {
-    backgroundColor: "#4caf50",
-  },
-  activeCircle: {
-    backgroundColor: "#2196f3",
-  },
-  stepText: {
-    fontSize: 14,
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: 200,
-  },
   button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    padding: 15,
+    alignItems: "center",
     borderRadius: 5,
-    backgroundColor: "#2196f3",
   },
-  disabledButton: {
-    backgroundColor: "#b0bec5",
+  text: {
+    backgroundColor: "transparent",
+    fontSize: 15,
+    color: "#fff",
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5,
   },
   buttonText: {
-    color: "#fff",
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: "Gill Sans",
+    textAlign: "center",
+    margin: 10,
+    color: "#ffffff",
+    backgroundColor: "transparent",
   },
 });

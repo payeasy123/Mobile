@@ -1,4 +1,4 @@
-import { moderateScale } from "react-native-size-matters";
+import { moderateScale, TextStyle } from "react-native-size-matters";
 import { COLORS } from "./colors";
 import { Fonts, FontSize } from "./fonts";
 
@@ -9,12 +9,13 @@ type CommonTextStyleProps = Partial<{
 }>;
 
 export const createTextStyle = (props: CommonTextStyleProps) => {
-  const { color = "white", weight = "Regular", size = "_12" } = props;
+  const { color = "white", weight = "regular", size = "_12" } = props;
 
   return {
     color: COLORS[color],
     includeFontPadding: false,
-    fontSize: moderateScale(FontSize[size]),
+    fontSize: moderateScale(FontSize[size]) ,
     fontFamily: Fonts[weight],
+    fontWeight: weight,
   };
 };

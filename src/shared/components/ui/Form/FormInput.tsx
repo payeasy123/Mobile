@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     rowGap: 7,
   },
   label: {
-    ...createTextStyle({ color: "offBlack", weight: "Regular", size: "_12" }),
+    ...createTextStyle({ color: "offBlack", weight: "regular", size: "_12" }),
   },
   input_container: {
     position: "relative",
@@ -106,10 +106,10 @@ const styles = StyleSheet.create({
     borderColor: "#E0E6E3",
     width: "100%",
     padding: 16,
-    ...createTextStyle({ color: "offBlack", weight: "Regular", size: "_14" }),
+    ...createTextStyle({ color: "offBlack", weight: "regular", size: "_14" }),
   },
   error: {
-    ...createTextStyle({ weight: "Regular", size: "_12" }),
+    ...createTextStyle({ weight: "regular", size: "_12" }),
     color: "red",
   },
   warn_container: {

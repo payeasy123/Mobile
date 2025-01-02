@@ -31,11 +31,11 @@ export const SnackBarStyle = StyleSheet.create({
     flex: 0.95,
   },
   HeaderText: {
-    ...createTextStyle({ size: "_14", weight: "ExtraBold" }),
+    ...createTextStyle({ size: "_14", weight: "bold" }),
     color: "#0B0B0B",
   },
   MessageText: {
-    ...createTextStyle({ weight: "Light" }),
+    ...createTextStyle({ weight: "light" }),
     color: "#393939",
     marginTop: 4,
   },

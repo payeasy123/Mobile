@@ -1,10 +1,18 @@
+const Font = {
+  regular: "Gellix-Regular",
+  semibold: "Gellix-Semibold",
+  bold: "Gellix-Bold",
+  condensedBold: "Gellix-Heavy",
+  normal: "Gellix-Medium",
+  light: "Gellix-Light",
+};
+
 export const Fonts = {
-  Regular: "Gellix-Regular",
-  SemiBold: "Gellix-Semibold",
-  Bold: "Gellix-Bold",
-  ExtraBold: "Gellix-Heavy",
-  Medium: "Gellix-Medium",
-  Light: "Gellix-Light",
+  thin: "Lato_100Thin",
+  light: "Lato_300Light",
+  regular: "Lato_400Regular",
+  bold: "Lato_700Bold",
+  condensedBold: "Lato_900Black",
 };
 
 export const FontSize = {

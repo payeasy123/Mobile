@@ -184,7 +184,7 @@ const Login = ({ navigation }: any) => {
                   textAlign: "center",
                   ...createTextStyle({
                     color: "white",
-                    weight: "Regular",
+                    weight: "regular",
                     size: "_16",
                   }),
                 }}
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
 
   welcome_text: {
     marginBottom: 24,
-    ...createTextStyle({ color: "offBlack", weight: "Bold", size: "_24" }),
+    ...createTextStyle({ color: "offBlack", weight: "bold", size: "_24" }),
   },
 
   input_container: {

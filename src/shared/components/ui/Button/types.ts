@@ -1,17 +1,24 @@
-import { StyleProp, TextStyle, ViewStyle } from "react-native";
+import { LinearGradientProps } from "expo-linear-gradient";
+import { ActivityIndicatorProps, GestureResponderEvent, TextStyle, ViewStyle } from "react-native";
 
-export interface ButtonProps {
-  onPress?: () => void;
+export type IVariant = "gradient" | "solid" | "outline" | "ghost";
+
+type OptionalParams = {
+  variant: IVariant;
+  gradientColors: readonly [string, string, ...string[]];
+  iconPosition: "left" | "right";
+  icon: React.ReactNode;
+  style: ViewStyle;
+  textStyle: TextStyle;
+  spinnerProps: ActivityIndicatorProps;
+  disabled: boolean;
+  loading: boolean;
+  gradientProps: Omit<LinearGradientProps, "colors">;
+};
+
+type ButtonProps = {
   title: string;
-  variant?: IVariant;
-  onLongPress?: () => void;
-  iconLeft?: React.ReactNode;
-  iconRight?: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<TextStyle>;
-  disabled?: boolean;
-  activeOpacity?: number;
-  loading?: boolean;
-}
+  onPress: (event: GestureResponderEvent) => void;
+} & Partial<OptionalParams>;
 
-export type IVariant = "contained" | "outlined" | "text";
+export { ButtonProps };

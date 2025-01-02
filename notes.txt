@@ -1,12 +1,12 @@
 Scanner             DONE
 Toaster             DONE
-Multi step progress bar
-Icon Button
+Multi step progress bar DONE
+Icon Button         DONE
 Bottom Sheet        DONE
 
 Basic Components
-Button - Variants
-Inputs - Variants
+Button - Variants   DONE
+Inputs - Variants   DONE
 OtpInputs
 Radio Components
 Checkbox
