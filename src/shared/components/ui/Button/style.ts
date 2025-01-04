@@ -1,54 +1,62 @@
 import { COLORS } from "@/src/shared/utils/colors";
-import { StyleSheet, ViewStyle } from "react-native";
-import { IVariant } from "./types";
+import { createTextStyle } from "@/src/shared/utils/createTextStyle";
+import { StyleSheet } from "react-native";
 
-type VariantStyles = Record<IVariant, ViewStyle>;
-
-const stylesByVariant: VariantStyles = {
-  contained: {
-    backgroundColor: COLORS.primary,
-    paddingVertical: 15,
-    paddingHorizontal: 22,
-    borderRadius: 12,
-  },
-  outlined: {
-    backgroundColor: COLORS.white,
-    borderColor: COLORS.primary,
-    borderWidth: 1,
-    paddingVertical: 15,
-    paddingHorizontal: 22,
-    borderRadius: 10,
-  },
-  text: {
-    backgroundColor: "transparent",
-    paddingVertical: 10,
+export const styles = StyleSheet.create({
+  gradientButton: {
+    borderRadius: 30,
+    paddingVertical: 12,
     paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
-};
-
-export const getButtonStyles = (variant?: IVariant) => {
-  return StyleSheet.create({
-    button: {
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      ...(variant ? stylesByVariant[variant] : {}),
-    },
-
-    buttonText: {
-      color: variant === "contained" ? COLORS.white : COLORS.primary,
-      // fontSize: SIZES.medium,
-    },
-
-    disabledButton: {
-      backgroundColor: "grey",
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-      borderRadius: 5,
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "100%",
-    },
-  });
-};
+  solidButton: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 30,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  outlinedButton: {
+    backgroundColor: "transparent",
+    borderWidth: 2,
+    borderRadius: 30,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: COLORS.primary,
+  },
+  ghostButton: {
+    backgroundColor: "transparent",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  ghostText: {
+    color: COLORS.primary,
+  },
+  contentContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  reverseContent: {
+    flexDirection: "row-reverse",
+  },
+  iconContainer: {
+    marginHorizontal: 8,
+  },
+  buttonText: {
+    ...createTextStyle({ color: "white", size: "_16", weight: "bold" }),
+  },
+  disabled: {
+    opacity: 0.5,
+    backgroundColor: "#7B7B7B",
+  },
+  spinner: {
+    alignSelf: "center",
+  },
+});

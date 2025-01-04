@@ -8,7 +8,7 @@ export default function HistoryScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="defaultSemiBold">Explore</ThemedText>
       </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
+      <ThemedText>This apps includes example code to help you get started.</ThemedText>
     </ThemedView>
   );
 }

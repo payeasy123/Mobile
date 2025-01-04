@@ -6,3 +6,4 @@ export * from "./Scanner";
 export * from "./Snackbar/index";
 export * from "./ThemedText";
 export * from "./ThemedView";
+export * from './BottomTabs/index'
