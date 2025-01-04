@@ -1,4 +1,5 @@
-import { createContext, useContext, type PropsWithChildren } from "react";
+import { router } from "expo-router";
+import { createContext, useContext, useEffect, type PropsWithChildren } from "react";
 import { useStorageState } from "../hooks";
 
 const AuthContext = createContext<{
@@ -28,6 +29,14 @@ export function useSession() {
 export function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState("session");
 
+  useEffect(() => {
+    if (session) {
+      router.replace("/(app)/(tabs)");
+    } else {
+      router.replace("/(auth)/sign-in");
+    }
+  }, [session]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -37,6 +46,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
         },
         signOut: () => {
           setSession(null);
+          router.push("/");
         },
         session,
         isLoading,

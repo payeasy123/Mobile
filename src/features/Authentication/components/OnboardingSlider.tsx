@@ -1,7 +1,7 @@
 import { COLORS } from "@/src/shared/utils/colors";
 import { SCREEN_WIDTH } from "@/src/shared/utils/screenDimensions";
 import { LinearGradient } from "expo-linear-gradient";
-import { Animated, StyleSheet, View } from "react-native";
+import { Animated, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 interface DataProps {
   id: number;
@@ -12,11 +12,12 @@ interface DataProps {
 interface OnboardingSliderProps {
   data: DataProps[];
   scrollX: Animated.Value;
+  containerStyles?: StyleProp<ViewStyle>;
 }
 
-export const OnboardingSlider = ({ data, scrollX }: OnboardingSliderProps) => {
+export const OnboardingSlider = ({ data, scrollX, containerStyles }: OnboardingSliderProps) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyles]}>
       {data.map((_, i) => {
         const inputRange = [(i - 1) * SCREEN_WIDTH, i * SCREEN_WIDTH, (i + 1) * SCREEN_WIDTH];
 
@@ -41,7 +42,7 @@ export const OnboardingSlider = ({ data, scrollX }: OnboardingSliderProps) => {
               }}
             >
               <LinearGradient
-                colors={["#0077B6", "#AB49FF"]}
+                colors={["#8000FF", "#AB49FF"]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={{
@@ -50,16 +51,6 @@ export const OnboardingSlider = ({ data, scrollX }: OnboardingSliderProps) => {
                 }}
               />
             </Animated.View>
-
-            {/* <Animated.View
-              style={{
-                ...StyleSheet.absoluteFillObject,
-                opacity: Animated.subtract(1, isActive),
-                backgroundColor: COLORS.grey30,
-                borderRadius: 100,
-                width: 8,
-              }}
-            /> */}
           </Animated.View>
         );
       })}
@@ -78,8 +69,8 @@ const styles = StyleSheet.create({
   dot: {
     height: 8,
     borderRadius: 8,
-    marginHorizontal: 4, // Adjusted spacing between dots to avoid overlap
-    overflow: "hidden", // Ensure child elements don't exceed bounds
+    marginHorizontal: 4,
+    overflow: "hidden",
     backgroundColor: COLORS.grey30,
   },
 });

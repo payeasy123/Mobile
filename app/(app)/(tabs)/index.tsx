@@ -6,8 +6,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function App() {
   const handlePress = () => console.log("Button Pressed");
   const [value, setValue] = useState("kljkjk");
-    const { signOut } = useSession();
-
+  const { signOut } = useSession();
 
   return (
     <View style={styles.container}>

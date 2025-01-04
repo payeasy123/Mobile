@@ -11,7 +11,7 @@ export const TabIcon = ({ isFocused, routeName }: TabIconProps) => {
   const translateY = useSharedValue(0);
 
   useEffect(() => {
-    scale.value = withSpring(isFocused ? 1 : 0, { damping: 12 });
+    scale.value = isFocused ? 1 : 0;
     translateY.value = withSpring(isFocused ? -35 : 0, { damping: 12 });
   }, [isFocused]);
 

@@ -1,13 +1,13 @@
-import { Container } from "@/src/shared/components/ui";
+import { Button, Container } from "@/src/shared/components/ui";
+import { useSession } from "@/src/shared/context";
 import { createTextStyle } from "@/src/shared/utils/createTextStyle";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@/src/shared/utils/screenDimensions";
 import { useRef, useState } from "react";
-import { Animated, Button, Dimensions, FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { Animated, FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { OnboardingSlider } from "../components";
 import { carouselItems } from "../data/onboarding-carousel";
-import { SCREEN_WIDTH } from "@/src/shared/utils/screenDimensions";
-import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
-
+import { OnboardingItems } from "../interfaces";
 
 const OnboardingPage = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -20,43 +20,24 @@ const OnboardingPage = () => {
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
-  const renderCarouselItem = ({ item }: any) => (
-    <View style={{ flex: 1, position: "relative" }}>
-      <Text
-        style={{
-          marginBottom: 40,
-          textAlign: "center",
-          width: SCREEN_WIDTH - (SCREEN_WIDTH * 0.05) / 0.45,
-          ...createTextStyle({
-            color: "black100",
-            weight: "bold",
-            size: "_24",
-          }),
-        }}
-      >
-        {item.header}
-      </Text>
+  const { signIn } = useSession();
 
-      <Image source={item.image} style={styles.carousel_img} />
+  const renderCarouselItem = ({ item }: { item: OnboardingItems }) => (
+    <View style={styles.carouselItem}>
+      <View style={styles.carouselItemContainer}>
+        <Text style={styles.carouselItemHeader}>{item.header}</Text>
+        <Text style={styles.carouselItemDescription}>{item.description}</Text>
+      </View>
+      <Image source={item.image} style={styles.carouselItemImage} />
     </View>
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      <Container
-        style={{
-          flexDirection: "column",
-          justifyContent: "space-between",
-          paddingBottom: 10,
-          paddingTop: 30,
-          height: "95%",
-        }}
-      >
+      <Container style={styles.innerContainer}>
         <View
           style={{
-            height: "85%",
-            flexDirection: "column",
-            justifyContent: "space-between",
+            height: "78%",
           }}
         >
           <FlatList
@@ -74,31 +55,21 @@ const OnboardingPage = () => {
             scrollEventThrottle={32}
             ref={slideRef}
             renderItem={renderCarouselItem}
+            style={{ height: "75%" }}
           />
-
-          <OnboardingSlider data={carouselItems} scrollX={scrollX} />
         </View>
 
-        {/* <GradientBackground
-          style={{
-            padding: 15,
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 12,
-            borderRadius: 100,
+        <OnboardingSlider data={carouselItems} scrollX={scrollX} />
+
+        <Button
+          variant="gradient"
+          title={activeIndex < 2 ? "Skip" : "Next"}
+          onPress={() => signIn()}
+          gradientProps={{
+            start: { x: 0.5, y: 0 },
+            end: { x: 0.5, y: 1 },
           }}
-        >
-          <Button
-            title={activeIndex < 2 ? "Skip" : "Next"}
-            onPress={() => navigation.navigate(LOGIN)}
-            textStyle={{
-              color: colors.whiteHex,
-              fontSize: fontSize.fontSize16,
-              fontFamily: "lato_regular",
-              textAlign: "center",
-            }}
-          />
-        </GradientBackground> */}
+        />
       </Container>
     </SafeAreaView>
   );
@@ -111,9 +82,41 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  carousel_img: {
+  innerContainer: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    paddingBottom: 10,
+    paddingTop: 60,
+    height: "100%",
+  },
+  carouselItem: {
+    flex: 1,
+    position: "relative",
+    width: Math.min(500, SCREEN_WIDTH * 0.9),
+  },
+  carouselItemImage: {
     width: SCREEN_WIDTH - SCREEN_WIDTH * 0.08,
     height: SCREEN_HEIGHT / (380 / 260),
     resizeMode: "contain",
+  },
+  carouselItemContainer: {
+    marginBottom: 30,
+  },
+  carouselItemHeader: {
+    textAlign: "center",
+    marginBottom: 8,
+    ...createTextStyle({
+      color: "black100",
+      weight: "bold",
+      size: "_24",
+    }),
+  },
+  carouselItemDescription: {
+    textAlign: "center",
+    ...createTextStyle({
+      color: "black100",
+      weight: "regular",
+      size: "_12",
+    }),
   },
 });

@@ -19,12 +19,14 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (fontsLoaded) {
+      router.push("/(auth)/sign-in")
       SplashScreen.hideAsync();
     }
 
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
+    
     return null;
   }
 

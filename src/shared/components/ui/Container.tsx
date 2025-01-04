@@ -17,7 +17,7 @@ export const Container = ({ children, style, ...rest }: ContainerProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: SCREEN_WIDTH * 0.04,
     maxWidth: Math.min(500, SCREEN_WIDTH * 0.9),
+    margin: "auto",
   },
 });

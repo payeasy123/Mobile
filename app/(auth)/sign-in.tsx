@@ -1,9 +1,40 @@
-import { Button, StyleSheet, TextInput, Text, View } from "react-native";
-import { router } from "expo-router";
+import { OnboardingScreen } from "@/src/features/Authentication/screens";
+import { Loader } from "@/src/shared/components/ui";
 import { useSession } from "@/src/shared/context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Login() {
-  const { signIn } = useSession();
+  const { signIn, isLoading } = useSession();
+  const [appLoading, setAppLoading] = useState(isLoading);
+
+  useEffect(() => {
+    setAppLoading(isLoading);
+  }, [isLoading]);
+
+  const [completedOnboarding, setCompletedOnboarding] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      setAppLoading(true);
+      const completed = await AsyncStorage.getItem("@onboardingComplete");
+      setCompletedOnboarding(completed !== null);
+      setAppLoading(false);
+    };
+
+    checkOnboardingStatus();
+  }, []);
+
+  if (appLoading) {
+    return <Loader />;
+  }
+
+  if (!completedOnboarding) {
+    return <OnboardingScreen />;
+  }
+
   const handleLogin = () => {
     //Adicione sua lógica de login aqui
     signIn();

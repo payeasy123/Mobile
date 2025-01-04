@@ -12,7 +12,7 @@ export const Button = (props: ButtonProps) => {
     title,
     onPress,
     variant = "solid",
-    gradientColors = ["#4c669f", "#3b5998", "#192f6a"],
+    gradientColors = ["#AB49FF", "#8000FF"],
     icon,
     iconPosition = "left",
     disabled = false,

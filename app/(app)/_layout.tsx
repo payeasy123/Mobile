@@ -1,3 +1,4 @@
+import { COLORS } from "@/src/shared/utils/colors";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
@@ -10,7 +11,13 @@ export default function AppLayout() {
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
         <ThemeProvider value={DefaultTheme}>
-          <Stack>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              animation: "slide_from_bottom",
+              contentStyle: { backgroundColor: COLORS.grey10 },
+            }}
+          >
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
