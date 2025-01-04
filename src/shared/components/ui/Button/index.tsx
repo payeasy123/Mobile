@@ -54,7 +54,11 @@ export const Button = (props: ButtonProps) => {
 
   if (variant === "gradient") {
     return (
-      <TouchableOpacity style={[style, buttonDisabled && { ...styles.disabled, ...styles.gradientButton }]} disabled={buttonDisabled}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={[style, buttonDisabled && { ...styles.disabled, ...styles.gradientButton }]}
+        disabled={buttonDisabled}
+      >
         {disabled && renderContent()}
 
         {!disabled && (

@@ -1,5 +1,6 @@
 import CustomInput from "@/src/shared/components/ui/Input";
 import { useSession } from "@/src/shared/context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -11,8 +12,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text
-        onPress={() => {
-          // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
+        onPress={async () => {
+          await AsyncStorage.removeItem("@onboardingComplete");
+
           signOut();
         }}
       >
