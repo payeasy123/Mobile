@@ -4,7 +4,7 @@ import { Loader } from "@/src/shared/components/ui";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 
-export default function Logins() {
+export default function SignIn() {
   const [appLoading, setAppLoading] = useState(false);
 
   const [completedOnboarding, setCompletedOnboarding] = useState<boolean | null>(null);

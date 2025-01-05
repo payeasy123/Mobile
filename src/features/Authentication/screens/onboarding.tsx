@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { OnboardingSlider } from "../components";
 import { carouselItems } from "../data/onboarding-carousel";
 import { OnboardingItems } from "../interfaces";
+import { COLORS } from "@/src/shared/utils/colors";
 
 const OnboardingPage = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: COLORS.grey10,
   },
 
   innerContainer: {

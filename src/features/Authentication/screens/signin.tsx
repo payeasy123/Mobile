@@ -182,7 +182,7 @@ const Login = ({ navigation }: any) => {
             <View style={styles.register_container}>
               <Text style={styles.register_text}>Don't have an account?</Text>
 
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => router.push("/(auth)/sign-up")}>
                 <Text style={styles.forgot_text}> Sign up</Text>
               </TouchableOpacity>
             </View>
@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: COLORS.grey10,
   },
 
   welcome_text: {
