@@ -111,7 +111,7 @@ const Login = ({ navigation }: any) => {
                     keyboardType={Platform.OS === "ios" ? "ascii-capable" : "default"}
                     iconRight={
                       <TouchableOpacity style={styles.eye_icon} onPress={() => setShowPassword(!showPassword)}>
-                        <Feather name={showPassword ? "eye" : "eye-off"} size={20} color={COLORS.grey60} />
+                        <Feather name={showPassword ? "eye" : "eye-off"} size={20} color={errors.password?.message ? COLORS.red60 : COLORS.grey60} />
                       </TouchableOpacity>
                     }
                   />
