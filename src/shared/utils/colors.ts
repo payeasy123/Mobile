@@ -17,6 +17,8 @@ export enum COLORS {
   error0Hex = "#FFF5F5",
   black = "#0B0B0B",
 
+  darkPurple = "#4A33A5",
+
   // RED
   redBase = "#FF3737",
   red10 = "#FFD7D7",

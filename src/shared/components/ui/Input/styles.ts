@@ -9,12 +9,26 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
+  labelContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    marginLeft: 10,
+  },
+
+  required: {
+    marginLeft: 5,
+    ...createTextStyle({
+      size: "_18",
+      weight: "regular",
+      color: "red60",
+    }),
+  },
+
   iconLeft: {
     marginRight: 8,
   },
-  iconRight: {
-    marginLeft: 8,
-  },
+
   errorContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -59,10 +73,8 @@ const getStyles = (inputState: InputState) => {
     }
 
     return {
-      marginBottom: 10,
-      marginLeft: 10,
       ...createTextStyle({
-        size: "_14",
+        size: "_12",
         weight: "regular",
         color,
       }),
@@ -112,7 +124,7 @@ const getStyles = (inputState: InputState) => {
       flex: 1,
       paddingVertical: 8,
       ...createTextStyle({
-        size: "_16",
+        size: "_14",
         weight: "regular",
         color,
       }),
@@ -122,6 +134,7 @@ const getStyles = (inputState: InputState) => {
   const inputContainerStyles = (variant: InputVariant): ViewStyle => {
     const baseStyles: ViewStyle = {
       flexDirection: "row",
+      position: "relative",
       alignItems: "center",
       paddingHorizontal: 10,
       paddingVertical: 5,
@@ -133,30 +146,27 @@ const getStyles = (inputState: InputState) => {
       shadowOpacity: 0.05,
       shadowRadius: 4,
       elevation: 2,
+      borderWidth: 1.5,
     };
 
     switch (inputState) {
       case "disabled":
         baseStyles.backgroundColor = COLORS.grey30;
         baseStyles.borderColor = COLORS.greyBase;
-        baseStyles.borderWidth = 1.5;
         break;
 
       case "error":
         baseStyles.backgroundColor = COLORS.red10;
-        baseStyles.borderColor = COLORS.red10;
-        baseStyles.borderWidth = 1.5;
+        baseStyles.borderColor = COLORS.red30;
         break;
 
       case "default":
         baseStyles.borderColor = COLORS.greyBase;
-        baseStyles.borderWidth = 1.5;
         break;
 
       default:
         baseStyles.backgroundColor = COLORS.grey20;
         baseStyles.borderColor = COLORS.greyBase;
-        baseStyles.borderWidth = 1.5;
         break;
     }
 

@@ -2,28 +2,21 @@
 // import { MAIN, REGISTER } from "@/constants/routeName";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import {
-  Dimensions,
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const { width, height } = Dimensions.get("window");
-
 // assets
-// import googleIcon from "@/assets/icons/Google.png";
-import { Container, DismissKeyboard } from "@/src/shared/components";
+import { IMAGES } from "@/assets/images";
+import { Container } from "@/src/shared/components/ui";
 import { Button } from "@/src/shared/components/ui/Button";
-import { FormInput } from "@/src/shared/components/ui/Form";
+import CustomInput from "@/src/shared/components/ui/Input";
+import { useSession } from "@/src/shared/context";
 import { COLORS } from "@/src/shared/utils/colors";
 import { createTextStyle } from "@/src/shared/utils/createTextStyle";
+import { SCREEN_WIDTH } from "@/src/shared/utils/screenDimensions";
 import { Feather } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { router } from "expo-router";
 import * as yup from "yup";
 
 interface FormDataProps {
@@ -33,6 +26,7 @@ interface FormDataProps {
 
 const Login = ({ navigation }: any) => {
   const [showPassword, setShowPassword] = useState(true);
+  const { signIn, isLoading } = useSession();
 
   const schema = yup.object().shape({
     email: yup.string().required("Email is required").email("Invalid email"),
@@ -41,7 +35,7 @@ const Login = ({ navigation }: any) => {
       .required("Password is required")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?!.*([a-zA-Z\d])\1{2}).{8,}$/,
-        "Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 8 characters long."
+        "Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 8 characters long.",
       ),
   });
 
@@ -61,152 +55,140 @@ const Login = ({ navigation }: any) => {
 
   const onSubmit = (data: FormDataProps) => {
     console.log(data);
-    navigation.navigate('');
+    signIn();
+    router.replace("/");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <DismissKeyboard>
-        <Container
+      <Container
+        style={{
+          paddingTop: 40,
+          height: "95%",
+        }}
+      >
+        <View
           style={{
-            paddingTop: 40,
-            height: "95%",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: "100%",
           }}
         >
-          <View
-            style={{
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: "100%",
-            }}
-          >
-            <View>
-              <Text style={styles.welcome_text}>Login</Text>
+          <View>
+            <Text style={styles.welcome_text}>Login</Text>
 
-              <View style={styles.input_container}>
-                <Controller
-                  name="email"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <FormInput
-                      value={value}
-                      onChange={onChange}
-                      label="Email address/phone number"
-                      placeholder="E.g Johndoe@gmail.com"
-                      error={errors.email?.message}
-                      autoCapitalize="none"
-                      keyboardType={
-                        Platform.OS === "ios" ? "ascii-capable" : "default"
-                      }
-                    />
-                  )}
-                />
+            <View style={styles.input_container}>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    required
+                    value={value}
+                    onChangeText={onChange}
+                    label="Email address/phone number"
+                    placeholder="E.g Johndoe@gmail.com"
+                    errorMessage={errors.email?.message}
+                    keyboardType={Platform.OS === "ios" ? "ascii-capable" : "default"}
+                    style={{ width: "100%" }}
+                  />
+                )}
+              />
 
-                <Controller
-                  name="password"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <FormInput
-                      value={value}
-                      label="Password"
-                      onChange={onChange}
-                      autoCapitalize="none"
-                      placeholder="Minumum of 14 Characters"
-                      secureTextEntry={showPassword}
-                      error={errors.password?.message}
-                      keyboardType={
-                        Platform.OS === "ios" ? "ascii-capable" : "default"
-                      }
-                      icon={
-                        <TouchableOpacity
-                          style={styles.eye_icon}
-                          onPress={() => setShowPassword(!showPassword)}
-                        >
-                          <Feather
-                            name={showPassword ? "eye" : "eye-off"}
-                            size={20}
-                            color={COLORS.black}
-                          />
-                        </TouchableOpacity>
-                      }
-                    />
-                  )}
-                />
-              </View>
-
-              <TouchableOpacity style={styles.forgot_btn}>
-                <Text style={styles.forgot_text}>Forgot password?</Text>
-              </TouchableOpacity>
+              <Controller
+                name="password"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    required
+                    value={value}
+                    onChangeText={onChange}
+                    label="Password"
+                    placeholder="Minumum of 14 Characters"
+                    autoCapitalize="none"
+                    secureTextEntry={showPassword}
+                    errorMessage={errors.password?.message}
+                    keyboardType={Platform.OS === "ios" ? "ascii-capable" : "default"}
+                    iconRight={
+                      <TouchableOpacity style={styles.eye_icon} onPress={() => setShowPassword(!showPassword)}>
+                        <Feather name={showPassword ? "eye" : "eye-off"} size={20} color={COLORS.grey60} />
+                      </TouchableOpacity>
+                    }
+                  />
+                )}
+              />
             </View>
 
-            <View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('')}
-                style={{
-                  padding: 16,
-                  borderRadius: 10,
-                  borderWidth: 1.5,
-                  borderColor: "#5660DB",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "transparent",
-                  marginBottom: 10,
-                }}
-              >
-                {/* <Image
-                  source={googleIcon}
-                  style={{
-                    width: 20,
-                    height: 20,
-                    resizeMode: "contain",
-                    marginRight: 15,
-                  }}
-                /> */}
+            <TouchableOpacity style={styles.forgot_btn}>
+              <Text style={styles.forgot_text}>Forgot password?</Text>
+            </TouchableOpacity>
+          </View>
 
-                <Text
-                  style={{
-                    ...createTextStyle({
-                      color: "offBlack",
-                      size: "_16",
-                    }),
-                    color: "#404040",
-                  }}
-                >
-                  Continue with Google
-                </Text>
-              </TouchableOpacity>
-
-              <Button
-                title="Sign in"
-                onPress={handleSubmit(onSubmit)}
-                textStyle={{
-                  textAlign: "center",
-                  ...createTextStyle({
-                    color: "white",
-                    weight: "regular",
-                    size: "_16",
-                  }),
-                }}
+          <View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("")}
+              style={{
+                padding: 14,
+                borderRadius: 10,
+                borderWidth: 1.5,
+                borderColor: "#AB49FF",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "transparent",
+              }}
+            >
+              <Image
+                source={IMAGES.GoogleIcon}
                 style={{
-                  backgroundColor: COLORS.primary,
-                  padding: "4%",
-                  borderRadius: 10,
-                  marginBottom: 10,
+                  width: 20,
+                  height: 20,
+                  resizeMode: "contain",
+                  marginRight: 15,
                 }}
               />
 
-              <View style={styles.register_container}>
-                <Text style={styles.register_text}>Don't have an account?</Text>
+              <Text
+                style={{
+                  ...createTextStyle({
+                    color: "offBlack",
+                    size: "_14",
+                  }),
+                  color: "#404040",
+                }}
+              >
+                Continue with Google
+              </Text>
+            </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigation.navigate('')}>
-                  <Text style={styles.forgot_text}> Sign up</Text>
-                </TouchableOpacity>
-              </View>
+            <Button
+              title="Sign in"
+              variant="gradient"
+              onPress={handleSubmit(onSubmit)}
+              textStyle={{
+                textAlign: "center",
+                ...createTextStyle({
+                  color: "white",
+                  weight: "regular",
+                  size: "_14",
+                }),
+              }}
+              style={{
+                borderRadius: 10,
+                paddingVertical: 16,
+              }}
+            />
+
+            <View style={styles.register_container}>
+              <Text style={styles.register_text}>Don't have an account?</Text>
+
+              <TouchableOpacity>
+                <Text style={styles.forgot_text}> Sign up</Text>
+              </TouchableOpacity>
             </View>
           </View>
-        </Container>
-      </DismissKeyboard>
+        </View>
+      </Container>
     </SafeAreaView>
   );
 };
@@ -215,9 +197,8 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    height: height,
+    flex: 1,
     justifyContent: "center",
-    backgroundColor: "#F0F0F0",
   },
 
   welcome_text: {
@@ -228,6 +209,7 @@ const styles = StyleSheet.create({
   input_container: {
     flexDirection: "column",
     rowGap: 17,
+    width: "100%",
   },
   eye_icon: {
     position: "absolute",
@@ -239,7 +221,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   forgot_text: {
-    ...createTextStyle({ color: "primary" }),
+    ...createTextStyle({ color: "darkPurple" }),
   },
 
   alternative: {
@@ -251,7 +233,7 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 1,
-    width: (width - width * 0.08) / 3,
+    width: (SCREEN_WIDTH - SCREEN_WIDTH * 0.08) / 3,
     backgroundColor: COLORS.icon,
   },
   alternative_text: {

@@ -13,7 +13,7 @@ export default function App() {
     <View style={styles.container}>
       <Text
         onPress={async () => {
-          await AsyncStorage.removeItem("@onboardingComplete");
+          // await AsyncStorage.removeItem("@onboardingComplete");
 
           signOut();
         }}

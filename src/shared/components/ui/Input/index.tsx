@@ -1,6 +1,5 @@
-import { COLORS } from "@/src/shared/utils/colors";
 import { useState } from "react";
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 import { IconSymbol } from "../../icons";
 import { getStyles, styles } from "./styles";
 import { CustomInputProps } from "./types";
@@ -15,12 +14,11 @@ const CustomInput = (props: CustomInputProps) => {
     containerStyle = {},
     iconLeft,
     iconRight,
-    onRightIconPress,
     errorMessage = "",
-    loading = false,
     disabled = false,
     label,
     infoMessage,
+    required,
   } = props;
 
   const [focused, setFocused] = useState(false);
@@ -39,9 +37,13 @@ const CustomInput = (props: CustomInputProps) => {
 
   return (
     <View style={[styles.container, containerStyle]}>
-      {label && <Text style={labelStyles}>{label}</Text>}
+      <View style={styles.labelContainer}>
+        <Text style={labelStyles}>{label}</Text>
 
-      <View style={inputContainerStyles(variant)}>
+        {required && <Text style={styles.required}>*</Text>}
+      </View>
+
+      <View style={[inputContainerStyles(variant)]}>
         {iconLeft}
 
         <TextInput
@@ -55,19 +57,8 @@ const CustomInput = (props: CustomInputProps) => {
           onBlur={() => setFocused(false)}
         />
 
-        {(iconRight || loading) && (
-          <View style={styles.iconRight}>
-            {loading && <ActivityIndicator size="small" color={COLORS.primary} />}
-
-            {iconRight && !loading && (
-              <TouchableOpacity onPress={onRightIconPress} disabled={disabled}>
-                {iconRight}
-              </TouchableOpacity>
-            )}
-          </View>
-        )}
+        {iconRight}
       </View>
-
       {infoMessage && (
         <View style={styles.errorContainer}>
           <IconSymbol name="info.circle" color={infoColor} size={18} />
@@ -75,7 +66,6 @@ const CustomInput = (props: CustomInputProps) => {
           <Text style={[styles.infoText, { color: infoColor }]}>{infoMessage}</Text>
         </View>
       )}
-
       {errorMessage && (
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{errorMessage}</Text>

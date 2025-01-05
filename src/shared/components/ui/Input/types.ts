@@ -8,9 +8,7 @@ interface OptionalProps {
   inputStyle: TextStyle;
   iconLeft: React.ReactNode;
   iconRight: React.ReactNode;
-  onRightIconPress?: () => void;
   errorMessage: string;
-  loading: boolean;
   disabled: boolean;
   required: boolean;
   infoMessage: string;

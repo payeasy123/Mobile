@@ -19,5 +19,6 @@ const styles = StyleSheet.create({
   container: {
     maxWidth: Math.min(500, SCREEN_WIDTH * 0.9),
     margin: "auto",
+    width: "100%",
   },
 });
