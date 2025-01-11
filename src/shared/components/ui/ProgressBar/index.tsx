@@ -4,7 +4,17 @@ import * as Progress from "react-native-progress";
 import { StepProgressBarProps } from "./types";
 
 export const StepProgressBar = (props: StepProgressBarProps) => {
-  const { totalSteps = 3, currentStep = 0, onStepChange = () => {}, stepIcons = {}, stepStyles = {}, containerStyle = {}, barProps = {} } = props;
+  const {
+    totalSteps = 3,
+    currentStep = 0,
+    onStepChange = () => {},
+    stepIcons = {},
+    stepStyles = {},
+    containerStyle = {},
+    barProps = {},
+    renderStepIcons = null,
+    renderStepLabels = null,
+  } = props;
 
   const positions = Array.from({ length: totalSteps });
   const progress = currentStep / (totalSteps - 1);
@@ -19,7 +29,7 @@ export const StepProgressBar = (props: StepProgressBarProps) => {
 
   return (
     <View style={[styles.progressContainer, containerStyle]}>
-      <Progress.Bar progress={progress} width={null} height={4} color={"#4caf50"} style={styles.progressBar} {...barProps} />
+      <Progress.Bar progress={progress} width={null} height={4} color={"red"} style={styles.progressBar} {...barProps} />
 
       {/* Steps */}
       <View style={[styles.stepsOverlay, stepStyles.overlay]}>
@@ -34,15 +44,34 @@ export const StepProgressBar = (props: StepProgressBarProps) => {
             : stepIcons.default || DefaultStepIcon;
 
           return (
-            <TouchableOpacity
-              key={index}
-              style={[styles.circle, stepStyles.circle, isCompleted && stepStyles.completedCircle, isActive && stepStyles.activeCircle]}
-              onPress={() => onStepChange(index)}
-              accessibilityLabel={`Step ${index + 1}`}
-              accessibilityRole="button"
-            >
-              <StepIcon />
-            </TouchableOpacity>
+            <View style={{ position: "relative" }}>
+              <TouchableOpacity
+                key={index}
+                style={[styles.circle, stepStyles.circle, isCompleted && stepStyles.completedCircle, isActive && stepStyles.activeCircle]}
+                onPress={() => onStepChange(index)}
+                accessibilityLabel={`Step ${index + 1}`}
+                accessibilityRole="button"
+              >
+                {renderStepIcons ? renderStepIcons({ itemIndex: index, currentActiveIndex: iconStep }) : <StepIcon />}
+              </TouchableOpacity>
+              {/* 
+              <View style={{ borderWidth: 1, borderColor: "red", position: "absolute", width: "80%", bottom: -20, left: -10 }}>
+                {renderStepLabels && renderStepLabels({ itemIndex: index, currentActiveIndex: iconStep })}
+              </View> */}
+            </View>
+          );
+        })}
+      </View>
+
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
+        {positions.map((_, index) => {
+          const isCompleted = index < iconStep;
+          const isActive = index === iconStep;
+
+          return (
+            <View >
+              {renderStepLabels && renderStepLabels({ itemIndex: index, currentActiveIndex: iconStep })}
+            </View>
           );
         })}
       </View>
@@ -80,6 +109,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e0e0e0",
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 5,
   },
   defaultIconText: {
     fontSize: 14,

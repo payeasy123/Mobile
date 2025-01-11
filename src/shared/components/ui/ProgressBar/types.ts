@@ -14,6 +14,11 @@ type StepIcons = Partial<{
   default: React.ComponentType;
 }>;
 
+type RenderStepContentPayload = {
+  itemIndex: number;
+  currentActiveIndex: number;
+};
+
 type StepProgressBarProps = Partial<{
   totalSteps: number;
   currentStep: number;
@@ -22,6 +27,8 @@ type StepProgressBarProps = Partial<{
   stepStyles: StepStyles;
   barProps: Progress.BarPropTypes;
   containerStyle: ViewStyle;
+  renderStepIcons?: (data: RenderStepContentPayload) => React.ReactNode;
+  renderStepLabels?: (data: RenderStepContentPayload) => React.ReactNode;
 }>;
 
 interface UseStepProgressOptions {

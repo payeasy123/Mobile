@@ -57,6 +57,19 @@ export enum COLORS {
   grey80 = "#6B6B6B",
   grey90 = "#464646",
   grey100 = "#2A2A2A",
+
+  // Purple
+  purpleBase = "#7B2CBF",
+  purple10 = "#E4D4F2",
+  purple20 = "#D3B8E9",
+  purple30 = "#BD95DF",
+  purple40 = "#A772D4",
+  purple50 = "#914FC9",
+  purple60 = "#66249F",
+  purple70 = "#521D7F",
+  purple80 = "#3D165F",
+  purple90 = "#290E3F",
+  purple100 = "#180826",
 }
 
 export type ColorKeys = keyof typeof COLORS;

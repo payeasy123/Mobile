@@ -77,6 +77,7 @@ const Register = ({ navigation }: any) => {
             style={{
               paddingTop: 40,
               height: "95%",
+              paddingBottom: 20,
             }}
           >
             <View
@@ -252,7 +253,7 @@ const Register = ({ navigation }: any) => {
                 </TouchableOpacity>
 
                 <Button
-                  title="Sign in"
+                  title="Sign Up"
                   variant="gradient"
                   onPress={handleSubmit(onSubmit)}
                   textStyle={{

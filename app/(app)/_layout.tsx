@@ -14,8 +14,6 @@ export default function AppLayout() {
           <Stack
             screenOptions={{
               headerShown: false,
-              animation: "slide_from_bottom",
-              contentStyle: { backgroundColor: COLORS.grey10 },
             }}
           >
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
