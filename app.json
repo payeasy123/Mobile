@@ -36,6 +36,14 @@
         }
       ],
       [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Payeasy to access your camera",
+          "microphonePermission": "Allow Payeasy to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash.png",

@@ -1,9 +1,12 @@
 import { CreditCardIcon, ShoppingCartIcon, StoreIcon } from "@/assets/icons";
 import QRCodeScanner from "@/src/features/Shopping/components/ui/QRCodeScanner";
+import CheckoutScreen from "@/src/features/Shopping/screens/checkout";
+import StoreScreen from "@/src/features/Shopping/screens/store";
 import { Button, Container, StepProgressBar } from "@/src/shared/components/ui";
 import { useStepProgress } from "@/src/shared/components/ui/ProgressBar/useProgressBar";
 import { COLORS } from "@/src/shared/utils/colors";
 import { createTextStyle } from "@/src/shared/utils/createTextStyle";
+import { router } from "expo-router";
 import { cloneElement } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -11,6 +14,12 @@ export default function App() {
   const { totalSteps, currentStep, handleNext } = useStepProgress({
     totalSteps: 3,
   });
+  const StepComponents = [() => <QRCodeScanner />, () => <StoreScreen handleNext={handleNext} />, () => <CheckoutScreen />];
+  const CurrentStepComponent = StepComponents[currentStep];
+  const gotToCart = () => {
+    router.navigate("/(app)/cart");
+    console.log("cart");
+  };
   return (
     <View style={{ backgroundColor: COLORS.grey10 }}>
       <Container hasTabBar>
@@ -56,10 +65,8 @@ export default function App() {
             }}
           />
 
-          <Text style={styles.header}>Scan the QR code of the store to get started.</Text>
-
-
-          <QRCodeScanner />
+          {/* <QRCodeScanner /> */}
+          {CurrentStepComponent && <CurrentStepComponent />}
 
           <Button onPress={handleNext} title="Testing" style={{ marginTop: 36 }} />
         </View>
@@ -70,6 +77,14 @@ export default function App() {
 
 const styles = StyleSheet.create({
   header: {
+    textAlign: "center",
+    ...createTextStyle({
+      color: "black40",
+      size: "_14",
+      weight: "regular",
+    }),
+  },
+  description: {
     textAlign: "center",
     ...createTextStyle({
       color: "black40",
