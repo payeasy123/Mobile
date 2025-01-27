@@ -96,6 +96,12 @@ const Cart = () => {
       },
     });
   };
+  const handleSearch = () => {
+    router.push("/(app)/search");
+  };
+  const handleBackButton = () => {
+    router.back();
+  };
 
   const totalItems = Object.values(quantities).reduce((sum, quantity) => sum + quantity, 0);
   const totalAmount = initialCartItems.reduce((sum, item) => sum + item.price * (quantities[item.id] || 0), 0);
@@ -104,11 +110,11 @@ const Cart = () => {
       <StatusBar style="dark" />
 
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={handleBackButton}>
           <ArrowLongLeft />
         </TouchableOpacity>
         <Image source={IMAGES.SparIcon} style={styles.logo} />
-        <TouchableOpacity style={styles.searchButton}>
+        <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
           <SearchIcon />
         </TouchableOpacity>
       </View>

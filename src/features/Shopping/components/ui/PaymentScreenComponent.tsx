@@ -13,14 +13,25 @@ interface PaymentCardProps {
   balance?: string;
   store?: string;
   onConfirm: () => void;
+  handleBackButton: () => void;
 }
 
-export const PaymentScreenComponent = ({ amount, title, subtitle, accountNumber, accountName, balance, store, onConfirm }: PaymentCardProps) => {
+export const PaymentScreenComponent = ({
+  amount,
+  title,
+  subtitle,
+  accountNumber,
+  accountName,
+  balance,
+  store,
+  onConfirm,
+  handleBackButton,
+}: PaymentCardProps) => {
   const [loading, setLoading] = useState(false);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleBackButton}>
           {" "}
           <ArrowLongLeft />
         </TouchableOpacity>

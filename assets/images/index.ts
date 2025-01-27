@@ -11,6 +11,7 @@ import OnboardingImage1 from "./OnboardingImage-Scan.png";
 import OnboardingImage2 from "./OnboardingImage-Shop.png";
 import SparImage from "./spar-large-img.png";
 import QrCodeImage from "./qr-code-large.png";
+import ShoppingBag from "./thank-you-shop.png";
 export const IMAGES = {
   GoogleIcon,
   SparIcon,
@@ -25,4 +26,5 @@ export const IMAGES = {
   OralBIcon,
   SparImage,
   QrCodeImage,
+  ShoppingBag,
 };

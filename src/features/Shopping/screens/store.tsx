@@ -4,8 +4,16 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { IMAGES } from "@/assets/images";
 import { COLORS } from "@/src/shared/utils/colors";
+import { Button } from "@/src/shared/components/ui";
+import { router } from "expo-router";
 
-const StoreScreen = () => {
+interface StoreScreenProps {
+  handleNext?: () => void;
+}
+const handleResumeButton = () => {
+  router.navigate("/(app)/cart");
+};
+const StoreScreen = ({ handleNext }: StoreScreenProps) => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -15,10 +23,26 @@ const StoreScreen = () => {
           <Image source={IMAGES.SparImage} style={styles.logo} resizeMode="contain" />
         </View>
 
-        <TouchableOpacity style={styles.resumeButton}>
+        {/* <TouchableOpacity style={styles.resumeButton}>
           <Text style={styles.resumeButtonText}>Resume shopping</Text>
           <MaterialIcons name="arrow-forward" size={24} color="white" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+        <Button
+          variant="gradient"
+          title={"Resume Shopping"}
+          icon={<MaterialIcons name="arrow-forward" size={24} color="white" />}
+          iconPosition="right"
+          onPress={handleResumeButton}
+          gradientProps={{
+            start: { x: 0.5, y: 0 },
+            end: { x: 0.5, y: 0.8 },
+          }}
+          style={{
+            width: "100%",
+            paddingVertical: 20,
+          }}
+        />
 
         <TouchableOpacity style={styles.exitButton}>
           <Text style={styles.exitButtonText}>Exit store</Text>

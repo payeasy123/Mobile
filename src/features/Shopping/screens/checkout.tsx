@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { IMAGES } from "@/assets/images";
 import { COLORS } from "@/src/shared/utils/colors";
 import { Button } from "@/src/shared/components/ui";
+import { CustomBottomSheetModal } from "@/src/shared/components/ui";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const CheckoutScreen = () => {
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const handleViewReceipt = () => {
     console.log("view");
+    bottomSheetModalRef.current?.present();
   };
+
+  const handlePresentModalPress = useCallback(() => {}, []);
+  const handleClose = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -21,10 +30,6 @@ const CheckoutScreen = () => {
 
         <Text style={styles.qrCodeText}>ABC 123</Text>
 
-        {/* <TouchableOpacity style={styles.resumeButton}>
-          <Text style={styles.resumeButtonText}>View Receipt</Text>
-          <MaterialIcons name="arrow-forward" size={24} color="white" />
-        </TouchableOpacity> */}
         <Button
           variant="gradient"
           title={"View Receipt"}
@@ -39,6 +44,45 @@ const CheckoutScreen = () => {
           }}
         />
       </SafeAreaView>
+      <CustomBottomSheetModal ref={bottomSheetModalRef}>
+        <View style={styles.sheetContent}>
+          <View style={styles.sheetHeader}>
+            <View style={styles.sheetHeaderContent}>
+              <Text style={styles.successTitle}>Shopping complete.</Text>
+              <Text style={styles.successMessage}>Thanks for shopping with us.</Text>
+            </View>
+            <View style={styles.closeIconContainer}>
+              <TouchableOpacity style={styles.closeIcon} onPress={handleClose}>
+                <MaterialIcons name="close" size={24} color={COLORS.black40} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.iconWrapper}>
+            <View style={styles.iconBackground}>
+              <Image source={IMAGES.ShoppingBag} />
+            </View>
+          </View>
+
+          <Button
+            variant="gradient"
+            title="View receipt"
+            onPress={() => console.log("View Receipt")}
+            gradientProps={{
+              start: { x: 0, y: 0 },
+              end: { x: 1, y: 0 },
+            }}
+            style={{
+              width: "100%",
+              paddingVertical: 16,
+              marginTop: 20,
+            }}
+          />
+          <TouchableOpacity style={styles.exitButton} onPress={() => console.log("Exit store")}>
+            <Text style={styles.exitButtonText}>Exit store →</Text>
+          </TouchableOpacity>
+        </View>
+      </CustomBottomSheetModal>
     </SafeAreaProvider>
   );
 };
@@ -86,5 +130,60 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: 18,
     textAlign: "center",
+  },
+  sheetContent: {
+    flex: 1,
+    width: "100%",
+  },
+  sheetHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  sheetHeaderContent: {
+    width: "95%",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  successTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: COLORS.black80,
+    textAlign: "center",
+    marginTop: 20,
+  },
+  closeIconContainer: {},
+  closeIcon: {},
+
+  successMessage: {
+    fontSize: 14,
+    color: COLORS.black40,
+    textAlign: "center",
+    marginTop: 8,
+  },
+  iconWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 30,
+  },
+  iconBackground: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  exitButton: {
+    marginTop: 16,
+    width: "100%",
+    borderWidth: 1,
+    borderColor: COLORS.purple50,
+    paddingVertical: 16,
+    borderRadius: 50,
+    alignItems: "center",
+  },
+  exitButtonText: {
+    color: COLORS.purple50,
+    fontSize: 16,
   },
 });

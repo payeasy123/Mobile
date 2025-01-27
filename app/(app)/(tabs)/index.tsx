@@ -14,11 +14,7 @@ export default function App() {
   const { totalSteps, currentStep, handleNext } = useStepProgress({
     totalSteps: 3,
   });
-  const StepComponents = [
-    () => <Text style={styles.header}>Scan the QR code of the store to get started.</Text>,
-    () => <StoreScreen />,
-    () => <CheckoutScreen />,
-  ];
+  const StepComponents = [() => <QRCodeScanner />, () => <StoreScreen handleNext={handleNext} />, () => <CheckoutScreen />];
   const CurrentStepComponent = StepComponents[currentStep];
   const gotToCart = () => {
     router.navigate("/(app)/cart");

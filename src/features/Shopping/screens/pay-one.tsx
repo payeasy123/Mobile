@@ -16,12 +16,16 @@ const PayMyCard = () => {
   ];
 
   const handleBackButton = () => {
-    router.push("/(app)/cart");
+    router.back();
   };
 
   const handlePayment = () => {
     if (selectedItem === "wallet") router.push("/(app)/pay-wallet");
     else router.push("/(app)/pay-transfer");
+  };
+
+  const handleNewCardPress = () => {
+    router.push("/(app)/pay-new-card");
   };
 
   return (
@@ -81,7 +85,7 @@ const PayMyCard = () => {
         <View style={styles.cardsSection}>
           <View style={styles.cardsSectionHeader}>
             <Text style={styles.cardsSectionTitle}>My cards</Text>
-            <TouchableOpacity style={styles.addCardButton}>
+            <TouchableOpacity style={styles.addCardButton} onPress={handleNewCardPress}>
               <Text style={styles.addCardButtonText}>New card +</Text>
             </TouchableOpacity>
           </View>

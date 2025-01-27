@@ -96,7 +96,7 @@
 //   },
 // });
 
-import { Camera, CameraType, BarcodeSettings, CameraView } from "expo-camera";
+import { BarcodeSettings, Camera, CameraView } from "expo-camera";
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -120,7 +120,15 @@ export default function QRCodeScanner() {
 
   const renderCamera = () => (
     <View style={styles.cameraContainer}>
-      <CameraView style={styles.camera} onBarcodeScanned={({ data }: { data: any }) => (scanned ? undefined : handleBarCodeScanned(data))} />
+      <CameraView
+        style={styles.camera}
+        barcodeScannerSettings={{
+          barcodeTypes: ["qr"],
+        }}
+        onBarcodeScanned={({ data }: { data: any }) => (scanned ? undefined : handleBarCodeScanned(data))}
+      />
+      {/* <Camera style={styles.camera} type={CameraType.back} onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} /> */}
+      {/* <Camera style={styles.camera} onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} /> */}
     </View>
   );
 
@@ -143,7 +151,7 @@ export default function QRCodeScanner() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to the QR Code Scanner!</Text>
-      <Text style={styles.paragraph}>Scan a QR code to start your job.</Text>
+
       {renderCamera()}
       <TouchableOpacity style={styles.button} onPress={() => setScanned(false)} disabled={!scanned}>
         <Text style={styles.buttonText}>Scan QR to Start your job</Text>
